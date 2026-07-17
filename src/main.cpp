@@ -1,3 +1,4 @@
+#include "common.hpp"
 #include "game_registry.hpp"
 
 
@@ -9,7 +10,6 @@ auto main() -> int
 
 
     game.destroy_entity(player);
-
 
 
     return 0;

@@ -4,6 +4,8 @@
 // Game components are coupled to the user's game_registry.hpp
 
 #include "common.hpp"
+#include <cstdint>
+#include <limits>
 
 
 // ComponentList

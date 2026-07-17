@@ -11,8 +11,12 @@
 //
 // make_system_manager<SList> unpacks a SystemList into SystemManagerImpl.
 
+#include "common.hpp"
+#include "system_base.hpp"
 #include "system_registry.hpp"
+#include <cstdint>
 #include <tuple>
+#include <type_traits>
 
 
 template <SystemType_t... Systems>

@@ -12,6 +12,10 @@
 
 
 // 1. Library infrastructure (no game types, no system headers)
+#include "common.hpp"
+#include "component_manager.hpp"
+#include "component_registry.hpp"
+#include "system_registry.hpp"
 #include "world.hpp"
 
 // 2. Game component headers

@@ -16,6 +16,8 @@
 
 #include "common.hpp"
 #include "component_registry.hpp"   // comp_type_index
+#include <concepts>
+#include <cstdint>
 
 
 // concept for Archetype validation

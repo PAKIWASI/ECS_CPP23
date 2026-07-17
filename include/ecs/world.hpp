@@ -30,6 +30,8 @@
 #include "system_manager.hpp"
 #include "system_registry.hpp"
 #include "archetype.hpp"
+#include <cassert>
+#include <cstdint>
 
 
 // World

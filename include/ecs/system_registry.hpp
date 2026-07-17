@@ -1,6 +1,8 @@
 #pragma once
 
 #include "system_base.hpp"
+#include <cstdint>
+#include <limits>
 
 
 // Ordered type list, position = permanent system ID
