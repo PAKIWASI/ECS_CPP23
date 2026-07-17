@@ -43,9 +43,8 @@ struct comp_type_index<T, ComponentList<Ts...>>
         }
 
         // T is not in this ComponentList.
-        // The returned max value will be caught by static_asserts in
-        // game_registry.hpp. We cannot static_assert(false) here because
-        // that fires before instantiation in C++ pre-C++26.
+        // The returned max value will be caught by static_asserts in game_registry.hpp.
+        // TODO: We cannot static_assert(false) here because that fires before instantiation.
         return std::numeric_limits<uint8_t>::max();
     }();
 };

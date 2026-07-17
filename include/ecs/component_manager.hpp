@@ -28,8 +28,8 @@ template <ComponentType_t T>
 class ComponentArray
 {
   private:
-    std::vector<T>                data;
-    std::vector<Entity>           idx_to_entity;
+    std::vector<T>                     data;
+    std::vector<Entity>                idx_to_entity;
     std::array<uint32_t, MAX_ENTITIES> entity_to_idx{};
 
   public:

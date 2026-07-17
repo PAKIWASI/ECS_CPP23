@@ -30,6 +30,9 @@ using SystemType    = uint8_t;
 // bits in Schedule represent which systems to run in an update function
 // we don't always blindly update each system each frame
 using Schedule      = std::bitset<MAX_SYSTEMS>;
+// TODO: we pass schedule by value to the update function, it is fune for now with MAX_SYSTEMS=16
+// what if it's bigger than 64bits? should we make it future proof by passing by value?
+// does it have any overhead
 
 // a sentient representing an entity id that not been issued
 // used in dense/sparse arrays where we index into sparse to find actual entity index in dense

@@ -1,6 +1,6 @@
 #pragma once
 
-// game_registry.hpp — THE single file you edit to extend the ECS.
+// game_registry.hpp — THE single file to edit to extend the ECS.
 //
 // Include order here is the only place that matters. Everything else in the
 // library uses comp_type_index<T,List>::value directly and has no include-order
