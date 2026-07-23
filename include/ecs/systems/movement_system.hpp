@@ -10,6 +10,7 @@
 #include "common.hpp"
 #include "system_base.hpp"
 #include "2d_comps.hpp"
+#include <cstdint>
 
 using namespace ECS_COMPS_2D;
 

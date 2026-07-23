@@ -145,9 +145,7 @@ exist; not yet integrated into the core.
 
 Currently `Archetype<CList, Ts...>` is explicitly *not* a storage strategy —
 it's a convenience for batch entity creation, while components stay
-per-type in `ComponentArray<T>`. A future option (not a planned replacement
-of the current design, since each wins for a different workload — see
-[Why not EnTT / flecs?](#why-not-entt--flecs) above) would group entities by
+per-type in `ComponentArray<T>`. A future is to group entities by
 their exact component set into per-archetype tables, the way flecs/bevy do.
 That makes multi-component iteration fully contiguous (no per-entity random
 lookup), at the cost of an O(k) data move whenever an entity's component set
@@ -156,11 +154,3 @@ multi-component systems dominating over component add/remove cost — not
 worth it if the opposite is true. This is a real rewrite of the storage
 layer, not a tweak; conceptual only at this point, no detailed design yet.
 
-## Known limitations
-
-- `RigidBody2::a` (acceleration) is currently unused — no system integrates it.
-- `input_system.hpp`, `render_system.hpp`, `collision_system.hpp` are empty
-  stubs, not wired into `game_registry.hpp` yet.
-- `EntityManager::create()` doesn't itself assert that the signature is
-  non-empty — passing an empty signature is caught later, at `destroy()`,
-  where it's indistinguishable from a double-destroy.
