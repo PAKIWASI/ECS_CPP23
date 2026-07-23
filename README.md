@@ -132,15 +132,6 @@ entities actually use it. Planned fix: replace these with a shared
 `PagedSparseArray<T>`, EnTT-style — 1024 entries per page, pages allocated
 lazily on first write instead of all at once.
 
-This makes raising `MAX_ENTITIES` cheap for component types whose usage
-stays clustered (e.g. a setup-only marker only the first N entities ever
-get) — verified at 96.7% memory savings in a standalone prototype for that
-case. It's a much smaller win (~12% in the same prototype) for component
-types that end up touching most of the address space over a long-running
-program's lifetime, since scattered access ends up allocating most pages
-anyway. Full design, call-site diffs, and a tested standalone prototype
-exist; not yet integrated into the core.
-
 ### Archetype-grouped storage
 
 Currently `Archetype<CList, Ts...>` is explicitly *not* a storage strategy —
