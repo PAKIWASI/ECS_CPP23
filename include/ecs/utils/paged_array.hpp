@@ -6,6 +6,8 @@
 #include <cstddef>
 #include <cstdint>
 #include <memory>
+#include <queue>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -33,6 +35,7 @@ template <PagedArrayElement T>
 class PagedArray
 {
   private:
+
     struct Page
     {
         uint16_t                  used = 0;
@@ -40,6 +43,8 @@ class PagedArray
     };
 
     std::vector<std::unique_ptr<Page>> pages{};
+
+    std::unordered_set<uint32_t> free_set; // value is page_no + page_offset
 
   public:
     PagedArray()
@@ -80,9 +85,14 @@ class PagedArray
     // lvalue (copied) or rvalue (moved) without you writing two overloads,
     // and without the `const T` footgun that silently disabled moves.
     template <typename U>
-    [[nodiscard]] auto push_back(U&& data) -> parr_addr
+    [[nodiscard]] auto push(U&& data) -> parr_addr
         requires std::constructible_from<T, U&&>
     {
+        if (!free_set.empty()) {
+            free_set[0]
+        }
+
+
         auto back_i = static_cast<page_no>(pages.size() - 1);
 
         if (pages[back_i]->used == PAGE_SIZE) {
@@ -106,6 +116,10 @@ class PagedArray
         assert(addr.page < pages.size() && "invalid page addr");
         assert(addr.offset < pages[addr.page]->used && "invalid page addr");
         pages[addr.page]->data[addr.offset] = std::forward<U>(data);
+
+        if (free_set.contains(addr.page+addr.offset)) {
+            free_set.erase(addr.page+addr.offset);
+        }
     }
 
     // Swap-removes within addr's own page, replacing the removed slot with
@@ -120,9 +134,7 @@ class PagedArray
     // global density (e.g. so you can iterate contiguously with no
     // per-page bookkeeping), you'd instead track the global last element's
     // address, swap with *that*, and have the entity/sparse map on top of
-    // this container update the moved element's address. That's a bigger
-    // design change than a bug fix, so flagging it rather than assuming
-    // it's what you want.
+    // this container update the moved element's address. 
     void swap_del(parr_addr addr)
     {
         assert(addr.page < pages.size() && "invalid page addr");
@@ -135,6 +147,8 @@ class PagedArray
         }
         p.data[last] = T{};   // drop the now-duplicate resource
         --p.used;
+
+        free_set.insert(addr.page+addr.offset);
     }
 
     // Same as swap_del but hands the removed value back to the caller.
@@ -152,6 +166,8 @@ class PagedArray
         p.data[last] = T{};
         --p.used;
         return ret;
+
+        free_set.insert(addr.page+addr.offset);
     }
 
   private:
