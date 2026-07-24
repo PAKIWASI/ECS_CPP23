@@ -1,6 +1,5 @@
 #include "common.hpp"
 #include "game_registry.hpp"
-#include <simdjson.h>
 
 
 auto main() -> int
