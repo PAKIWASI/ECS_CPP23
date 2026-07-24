@@ -16,7 +16,9 @@ using page_offset  = uint16_t;
 using parr_address = std::pair<page_no, page_offset>;
 
 
-template <typename T> class PagedArray {
+
+template <typename T> class PagedArray
+{
   private:
     std::vector<std::unique_ptr<std::array<T, PAGE_SIZE>>> array{};
     std::vector<uint16_t>                                  page_offsets;
